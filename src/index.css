@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@tailwind utilities;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  @apply bg-gray-50 text-gray-800; /* global default style */
+
+}
