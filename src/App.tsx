@@ -1,12 +1,12 @@
-import "./App.css";
-import Login from "./pages/Login";
+
+import Navbar from "./components/common/Navbar";
 import Register from "./pages/Register";
 import Test from "./pages/Test";
 
 function App() {
   return (
     <>
-      <Register />
+      <Navbar/>
     </>
   );
 }
