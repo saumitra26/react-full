@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import type { RegisterRequest } from "../dataModel/auth";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
   const {
     register,
@@ -10,6 +11,7 @@ const Register = () => {
   } = useForm<RegisterRequest>({});
   const { registerUser } = useAuth();
   const [loading, setLoading] = useState(false);
+  const navigate=useNavigate()
 
   const [submitError, setSubmitError] = useState<string | null>(null);
   const onSubmit = async (registerData: RegisterRequest) => {
@@ -17,6 +19,7 @@ const Register = () => {
     try {
       await registerUser(registerData);
       setLoading(true);
+      navigate("/login")
     } catch (error) {
       console.error(error);
       alert("Registration failed!");

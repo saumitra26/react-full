@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import type { LoginRequest } from "../dataModel/auth";
-
+<></>
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
