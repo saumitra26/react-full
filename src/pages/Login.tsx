@@ -3,22 +3,24 @@ import { useForm } from "react-hook-form";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import type { LoginRequest } from "../dataModel/auth";
-<></>
+import { useNavigate } from "react-router-dom";
+<></>;
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const { login, user } = useAuth();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginRequest>({});
   const onSubmit = async (loginData: LoginRequest) => {
-    console.log(loginData);
     setSubmitError(null);
     try {
       setLoading(true);
       await login(loginData);
+      navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
       setSubmitError("Invalid email or password.");

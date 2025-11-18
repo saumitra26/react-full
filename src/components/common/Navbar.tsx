@@ -12,7 +12,7 @@ const Navbar = () => {
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
       ? "text-blue-600 font-semibold transition-colors"
-      : "text-gray-700  hover:bg-gray-300 rounded-md p-1 transition-colors";
+      : "text-gray-700  hover:bg-gray-300 rounded-md  transition-colors";
   const handleLogout = () => {
     logout();
     setOpen(false);
@@ -34,7 +34,7 @@ const Navbar = () => {
           </div>
           {/* Navigation Links */}
           <div className="hidden sm:flex space-x-6">
-            <NavLink className={linkClass} to="/home">
+            <NavLink className={linkClass} to="/">
               Home
             </NavLink>
             <NavLink className={linkClass} to="/book">
