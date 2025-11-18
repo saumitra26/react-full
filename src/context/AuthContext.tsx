@@ -28,46 +28,49 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<AuthUser | null>(null);
-  useEffect(() => { 
-    const token = localStorage.getItem("token")
-    if (!token) return
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
     try {
       const decoded = jwtDecode<TokenPayload>(token);
       //Token expired
-      if (decoded.exp * 1000 < Date.now()) { localStorage.removeItem("token"); return; } 
+      if (decoded.exp * 1000 < Date.now()) {
+        localStorage.removeItem("token");
+        return;
+      }
       setUser({
         id: decoded.id,
         name: decoded.name,
         email: decoded.email,
         role: decoded.role,
-      })
-    } catch (error) { 
+      });
+    } catch (error) {
       localStorage.removeItem("token");
     }
-  },[])
+  }, []);
 
   const login = async (payload: LoginRequest) => {
     const result = await authApi.login(payload);
-    console.log("token",result.token)
+    console.log("token", result.token);
     localStorage.setItem("token", result.token);
     if (result.token) {
       const decoded = jwtDecode<any>(result.token);
-      console.log("decoded",decoded)
+      console.log("decoded", decoded);
       setUser({
         id: decoded.id,
-        name:decoded.name,
+        name: decoded.name,
         email: decoded.email,
         role: decoded.role,
       });
     }
   };
-    const logout = () => {
+  const logout = () => {
     localStorage.removeItem("token");
     setUser(null);
   };
 
-  const registerUser= async (payload: RegisterRequest) => {
-    console.log("payload",payload)
+  const registerUser = async (payload: RegisterRequest) => {
+    console.log("payload", payload);
     await authApi.register(payload);
   };
 
@@ -77,4 +80,4 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     </AuthContext.Provider>
   );
 };
-export const useAuth =()=> useContext(AuthContext)!
+export const useAuth = () => useContext(AuthContext)!;
