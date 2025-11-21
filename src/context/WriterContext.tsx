@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { Writer, writerRequest } from "../dataModel/writer";
 import { writerApi } from "../api/writerApi";
+import { useAuth } from "./AuthContext";
 
 type WriterContextType = {
   writers: Writer[];
@@ -13,18 +14,22 @@ type WriterContextType = {
 };
 const WriterContext = createContext<WriterContextType | null>(null);
 export const WriterProvider = ({ children }: { children: React.ReactNode }) => {
+  const { user } = useAuth();
   const [writers, setWriters] = useState<Writer[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [errors, setErrors] = useState<string | null>(null);
   console.log("result");
   useEffect(() => {
-    fetchWriters();
-  }, []);
+    if (user) {
+      fetchWriters();
+    }
+  }, [user]);
   const fetchWriters = async () => {
+    console.log("fetchWriters started ✅");
     try {
       setLoading(true);
       const result = await writerApi.getWriters();
-       console.log("resultwwww")
+      console.log("resultwwww");
       setWriters(result.data);
     } catch (error: any) {
       setErrors(error.message);
@@ -60,7 +65,7 @@ export const WriterProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error: any) {
       setErrors(error.message);
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
   const deleteWriter = async (id: number) => {
@@ -72,7 +77,7 @@ export const WriterProvider = ({ children }: { children: React.ReactNode }) => {
     } catch (error: any) {
       setErrors(error.message);
     } finally {
-      setLoading(true);
+      setLoading(false);
     }
   };
   return (

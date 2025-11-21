@@ -1,6 +1,7 @@
 import { createContext, useState, useContext, useEffect } from "react";
 import type { Book, BookRequest } from "../dataModel/book";
 import bookApi from "../api/bookApi";
+import { useAuth } from "./AuthContext";
 type BookContextType = {
   books: Book[];
   loading: boolean;
@@ -16,9 +17,12 @@ export const BookProvider = ({ children }: { children: React.ReactNode }) => {
   const [books, setBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { user } = useAuth();
   useEffect(() => {
-    fetchAllBook();
-  }, []);
+    if (user) {
+      fetchAllBook();
+    }
+  }, [user]);
 
   const fetchAllBook = async () => {
     try {

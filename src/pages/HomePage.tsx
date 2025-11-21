@@ -1,20 +1,24 @@
-import React from 'react'
-import { useBook } from '../context/BookContext'
-import { useWriter } from '../context/WriterContext'
-const HomePage = () => {
-   // const { books } = useBook()
-   // console.log("ddd",books)
-    const { writers } = useWriter();
-     console.log("writers",writers)
-  return (
-      <div>
-          {writers.map((book) =>
-              <ul key={ book.id}>
-                  <li >{ book.id}</li>
-              </ul>
-        )}
-    </div>
-  )
-}
+import React from "react";
+import { useBook } from "../context/BookContext";
+import { useWriter } from "../context/WriterContext";
+import HomeStart from "../components/common/HomeStart";
+import HomePageCard from "../components/common/HomePageCard";
+import BookList from "../components/common/BookList";
 
-export default HomePage
+const HomePage = () => {
+  // const { books } = useBook()
+  // console.log("ddd",books)
+  const { writers } = useWriter();
+  const { books } = useBook();
+
+  console.log("writers", writers);
+  return (
+    <>
+      <HomeStart />
+      <HomePageCard />
+      <BookList />
+    </>
+  );
+};
+
+export default HomePage;
