@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @tailwind utilities;
+
 *,
 *::before,
 *::after {
@@ -11,6 +12,19 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  @apply bg-gray-50 text-gray-800; /* global default style */
+  background-color: rgb(237, 239, 235); /* global default style */
+  overflow-x: hidden;
+}
+@layer utilities {
+  .bg-custom-lime {
+    background-color: rgb(128, 225, 66);
+  }
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

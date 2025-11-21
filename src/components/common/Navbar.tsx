@@ -11,8 +11,8 @@ const Navbar = () => {
 
   const linkClass = ({ isActive }: { isActive: boolean }) =>
     isActive
-      ? "text-blue-600 font-semibold transition-colors"
-      : "text-gray-700  hover:bg-gray-300 rounded-md  transition-colors";
+      ? "text-green-600 font-semibold transition-colors py-1"
+      : "text-gray-700  hover:bg-green-400 py-1 px-2 rounded-md  transition-colors";
   const handleLogout = () => {
     logout();
     setOpen(false);
