@@ -3,7 +3,8 @@ import { useBook } from "../context/BookContext";
 import { useWriter } from "../context/WriterContext";
 import HomeStart from "../components/common/HomeStart";
 import HomePageCard from "../components/common/HomePageCard";
-import BookList from "../components/common/BookList";
+import BookList from "../components/books/BookList";
+import WriterList from "../components/writer/WriterList";
 
 const HomePage = () => {
   // const { books } = useBook()
@@ -17,6 +18,7 @@ const HomePage = () => {
       <HomeStart />
       <HomePageCard />
       <BookList />
+      <WriterList/>
     </>
   );
 };
