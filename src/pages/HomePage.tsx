@@ -5,6 +5,7 @@ import HomeStart from "../components/common/HomeStart";
 import HomePageCard from "../components/common/HomePageCard";
 import BookList from "../components/books/BookList";
 import WriterList from "../components/writer/WriterList";
+import Footer from "../components/common/Footer";
 
 const HomePage = () => {
   // const { books } = useBook()
@@ -18,7 +19,8 @@ const HomePage = () => {
       <HomeStart />
       <HomePageCard />
       <BookList />
-      <WriterList/>
+      <WriterList />
+      <Footer/>
     </>
   );
 };
