@@ -4,12 +4,13 @@ import "./index.css";
 import App from "./App.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import AppRouter from "./routes/AppRouter.tsx";
-import Navbar from './components/common/Navbar.tsx'
+import Navbar from "./components/common/Navbar.tsx";
+import { BrowserRouter } from "react-router-dom";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <AuthProvider>
+  <AuthProvider>
+    <BrowserRouter>
       <AppRouter />
-    </AuthProvider>
-  </StrictMode>
+    </BrowserRouter>
+  </AuthProvider>
 );

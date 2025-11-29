@@ -1,7 +1,7 @@
 export interface Writer { 
     id?: number,
     name: string,
-    email:string
+    email?:string
 }
 export interface writerRequest { 
     name: string,

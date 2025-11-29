@@ -4,15 +4,29 @@ import BookCard from "./BookCard";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import { GrLinkNext } from "react-icons/gr";
 import { GrLinkPrevious } from "react-icons/gr";
-const BookList = () => {
+const BookList = ({ paginate = true }) => {
   const { books } = useBook();
- const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0);
   const width = useWindowWidth();
   let cardsToShow = 2;
   if (width >= 640) cardsToShow = 3; // sm:
   if (width >= 768) cardsToShow = 4; // md:
   if (width >= 1024) cardsToShow = 5; // lg:
   if (width >= 1280) cardsToShow = 5;
+  if (!paginate) {
+    return (
+      <section>
+        <div className="max-w-7xl mx-auto p-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {books.map((book) => (<BookCard key={book.id} book={ book} paginate={false} />)
+              
+            )}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   const totalPages = useMemo(
     () => Math.max(1, Math.ceil(books.length / cardsToShow)),
     [books.length, cardsToShow]
@@ -43,22 +57,22 @@ const BookList = () => {
         <button
           onClick={handleNextPage}
           disabled={page === totalPages - 1}
-          className=" absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gray-400 rounded-full px-2 py-2  disabled:hidden "
+          className=" absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-gray-400 rounded-md border-2 px-2 py-2  disabled:hidden "
         >
-          <GrLinkNext/> 
+          <GrLinkNext />
         </button>
 
         <button
           onClick={handlePrevPage}
           disabled={page === 0}
-          className=" absolute left-0 top-1/2  -translate-y-1/2 z-10 bg-gray-400 rounded-full px-2 py-2 disabled:hidden"
+          className=" absolute left-0 top-1/2  -translate-y-1/2 z-10 bg-gray-400 rounded-md   border-2 px-2 py-2 disabled:hidden"
         >
-         <GrLinkPrevious/>
+          <GrLinkPrevious />
         </button>
 
         <div className="gap-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
           {visibleWriters.map((book) => (
-            <BookCard key={book.id} book={book} />
+            <BookCard key={book.id} book={book} paginate={ true} />
           ))}
         </div>
       </div>

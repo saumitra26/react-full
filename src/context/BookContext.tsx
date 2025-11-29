@@ -10,6 +10,7 @@ type BookContextType = {
   addNewBook: (payload: BookRequest) => Promise<void>;
   updateBook: (id: number, payload: BookRequest) => Promise<void>;
   deleteBook: (id: number) => Promise<void>;
+  fetchAllBook: (params?: Record<string, any>) => Promise<void>;
 };
 const BookContext = createContext<BookContextType | null>(null);
 
@@ -19,17 +20,19 @@ export const BookProvider = ({ children }: { children: React.ReactNode }) => {
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
   useEffect(() => {
+    console.log("helooo");
     if (user) {
       fetchAllBook();
+      console.log("helooo");
     }
   }, [user]);
 
-  const fetchAllBook = async () => {
+  const fetchAllBook = async (params?: Record<string, any>) => {
     try {
       setLoading(true);
-      const result = await bookApi.getBooks();
-
+      const result = await bookApi.getBooks(params);
       setBooks(result.data);
+     
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -94,6 +97,7 @@ export const BookProvider = ({ children }: { children: React.ReactNode }) => {
         deleteBook,
         updateBook,
         addNewBook,
+        fetchAllBook,
       }}
     >
       {children}
