@@ -9,6 +9,7 @@ import { jwtDecode } from "jwt-decode";
 
 type AuthContextType = {
   user: AuthUser | null;
+  loading: boolean;
   login: (payload: LoginRequest) => Promise<void>;
   logout: () => void;
   registerUser: (payload: RegisterRequest) => Promise<void>;
@@ -28,17 +29,24 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [loading, setLoading] = useState(true); 
   useEffect(() => {
-    
+  const initAuth = () => {
     const token = localStorage.getItem("token");
-    if (!token) return;
+    if (!token) {
+      setLoading(false);
+      return;
+    }
+
     try {
       const decoded = jwtDecode<TokenPayload>(token);
-      //Token expired
+
       if (decoded.exp * 1000 < Date.now()) {
         localStorage.removeItem("token");
+        setLoading(false);
         return;
       }
+
       setUser({
         id: decoded.id,
         name: decoded.name,
@@ -48,7 +56,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     } catch (error) {
       localStorage.removeItem("token");
     }
-  }, []);
+
+    setLoading(false);
+  };
+
+  initAuth();
+}, []);
 
   const login = async (payload: LoginRequest) => {
     const result = await authApi.login(payload);
@@ -64,6 +77,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         role: decoded.role,
       });
     }
+    setLoading(false);
   };
   const logout = () => {
     localStorage.removeItem("token");
@@ -76,7 +90,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, registerUser }}>
+    <AuthContext.Provider value={{ user,loading, login, logout, registerUser }}>
       {children}
     </AuthContext.Provider>
   );

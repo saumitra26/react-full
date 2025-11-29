@@ -4,7 +4,7 @@ import useWindowWidth from "../../hooks/useWindowWidth";
 import WriterCard from "./WriterCard";
 import { GrLinkNext } from "react-icons/gr";
 import { GrLinkPrevious } from "react-icons/gr";
-const WriterList = () => {
+const WriterList = ({ paginate=true}) => {
   const { writers } = useWriter();
   const [page, setPage] = useState(0);
   const width = useWindowWidth();
@@ -12,7 +12,20 @@ const WriterList = () => {
   if (width >= 640) cardsToShow = 3; // sm:
   if (width >= 768) cardsToShow = 4; // md:
   if (width >= 1024) cardsToShow = 5; // lg:
-  if (width >= 1280) cardsToShow = 5;
+ if (width >= 1280) cardsToShow = 5;
+    if (!paginate) { 
+        return (
+            <section>
+                <div className="max-w-7xl mx-auto p-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                        {writers.map((writer) => (<WriterCard key={writer.id} writer={ writer} />))}
+                    </div>
+
+                </div>
+            </section>
+        )
+    }
+
   const totalPages = useMemo(
     () => Math.max(1, Math.ceil(writers.length / cardsToShow)),
     [writers.length, cardsToShow]
@@ -43,7 +56,7 @@ const WriterList = () => {
         <button
           onClick={handleNextPage}
           disabled={page === totalPages - 1}
-          className=" absolute right-0 top-1/2 -translate-y-1/2 z-10  bg-gray-400 rounded-full px-2 py-2  disabled:hidden "
+          className=" absolute right-0 top-1/2 -translate-y-1/2 z-10  bg-gray-400 rounded-md  border-2 px-2 py-2  disabled:hidden "
         >
           <GrLinkNext />
         </button>
@@ -51,7 +64,7 @@ const WriterList = () => {
         <button
           onClick={handlePrevPage}
           disabled={page === 0}
-          className=" absolute left-0 top-1/2  -translate-y-1/2 z-10  bg-gray-400 rounded-full px-2 py-2 disabled:hidden"
+          className=" absolute left-0 top-1/2  -translate-y-1/2 z-10  bg-gray-400 rounded-md  border-2 px-2 py-2 disabled:hidden"
         >
           <GrLinkPrevious />
         </button>

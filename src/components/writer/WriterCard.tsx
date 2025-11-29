@@ -1,8 +1,9 @@
 import type { Writer } from "../../dataModel/writer";
 import { Link } from "react-router-dom";
+import { GrLinkNext } from "react-icons/gr";
 const WriterCard = ({ writer }: { writer: Writer }) => {
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 flex flex-col justify-between min-h-[180px]">
+    <div className="bg-white relative rounded-2xl shadow-md p-6 flex flex-col justify-between min-h-[180px]">
       
       <div className="space-y-2">
         <h1 className="font-semibold text-lg text-gray-800">
@@ -17,9 +18,9 @@ const WriterCard = ({ writer }: { writer: Writer }) => {
       <div className="mt-6 flex justify-end">
         <Link
           to={`/writers/${writer.id}`}
-          className="rounded-md bg-custom-lime px-4 py-1.5 text-sm font-medium hover:opacity-90 transition"
+          className="rounded-full absolute bg-custom-lime bottom-2 right-2 px-2 py-2 text-sm font-medium hover:opacity-90 transition"
         >
-          Details
+         <GrLinkNext/>
         </Link>
       </div>
     </div>

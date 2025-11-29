@@ -20,9 +20,9 @@ export interface UpdateResponse {
 }
 
 const bookApi = {
-  getBooks: () =>
+  getBooks: (params?:Record<string,any>) =>
     axiosClient
-      .get<BookApiResponse>("/books")
+      .get<BookApiResponse>("/books", {params})
       .then((response) => response.data),
   getBookById: (id: number) =>
     axiosClient.get<Book>(`/books/${id}`).then((response) => response.data),

@@ -1,14 +1,16 @@
 import { useAuth } from "../context/AuthContext";
 import { useForm } from "react-hook-form";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import type { LoginRequest } from "../dataModel/auth";
 import { useNavigate } from "react-router-dom";
-<></>;
+
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const { login, user } = useAuth();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
   const {
     register,
@@ -20,7 +22,7 @@ const Login = () => {
     try {
       setLoading(true);
       await login(loginData);
-      navigate("/");
+      navigate(from, { replace: true });
     } catch (error) {
       console.error("Login failed:", error);
       setSubmitError("Invalid email or password.");

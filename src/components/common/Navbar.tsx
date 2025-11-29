@@ -25,7 +25,7 @@ const Navbar = () => {
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <div className="shrink-0">
-            <NavLink to="/" className={`${linkClass} flex items-center`}>
+            <NavLink to="/" className={` flex items-center`}>
               <img className="h-14 w-auto " src={bookImage} alt="LibraryBook" />
               <span className="hidden md:block text-black text-2xl font-bold ml-2 ">
                 Book Library
@@ -42,6 +42,9 @@ const Navbar = () => {
             </NavLink>
             <NavLink className={linkClass} to="/writer">
               Writer
+            </NavLink>
+            <NavLink className={linkClass} to="/addBook">
+              Add Book
             </NavLink>
             {user ? (
               <button
@@ -94,18 +97,24 @@ const Navbar = () => {
               >
                 <ul className="p-4 space-y-4 ml-3">
                   <li>
-                    <Link to="/login" onClick={() => setOpen(false)}>
+                    <Link to="/" onClick={() => setOpen(false)}>
                       Home
                     </Link>
                   </li>
                   <li>
-                    <Link to="/home" onClick={() => setOpen(false)}>
+                    <Link to="/book" onClick={() => setOpen(false)}>
                       Book
                     </Link>
                   </li>
+                 
                   <li>
-                    <Link to="/home" onClick={() => setOpen(false)}>
+                    <Link to="/writer" onClick={() => setOpen(false)}>
                       Writer
+                    </Link>
+                  </li>
+                   <li>
+                    <Link to="/addBook" onClick={() => setOpen(false)}>
+                      Add Writer
                     </Link>
                   </li>
                   {user ? (
