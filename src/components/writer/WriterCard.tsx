@@ -17,7 +17,7 @@ const WriterCard = ({ writer }: { writer: Writer }) => {
 
       <div className="mt-6 flex justify-end">
         <Link
-          to={`/writers/${writer.id}`}
+          to={`/writer/${writer.id}`}
           className="rounded-full absolute bg-custom-lime bottom-2 right-2 px-2 py-2 text-sm font-medium hover:opacity-90 transition"
         >
          <GrLinkNext/>

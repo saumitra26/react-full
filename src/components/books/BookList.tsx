@@ -4,8 +4,13 @@ import BookCard from "./BookCard";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import { GrLinkNext } from "react-icons/gr";
 import { GrLinkPrevious } from "react-icons/gr";
-const BookList = ({ paginate = true }) => {
-  const { books } = useBook();
+import type { Book } from "../../dataModel/book";
+interface BookInterface { 
+  books: Book[];
+  paginate:boolean
+}
+const BookList = ({ books, paginate  }:BookInterface) => {
+
   const [page, setPage] = useState(0);
   const width = useWindowWidth();
   let cardsToShow = 2;
@@ -50,7 +55,7 @@ const BookList = ({ paginate = true }) => {
   return (
     <section>
       <div className="max-w-7xl mx-auto pb-6">
-        <h1 className="px-5  text-gray-600 text-2xl font-bold">Writer List</h1>
+        <h1 className="px-5  text-gray-600 text-2xl font-bold">Book List</h1>
         <div className="h-px bg-black mt-3"></div>
       </div>
       <div className="max-w-7xl mx-auto p-4 relative w-full">

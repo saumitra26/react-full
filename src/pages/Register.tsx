@@ -47,7 +47,7 @@ const Register = () => {
             className={`w-full border ${
               errors.name ? "border-red-600" : "border-gray-300"
             }  rounded-md p-2 `}
-            placeholder="Name"
+            placeholder="Full Name"
           />
           {errors.name && (
             <p className="text-red-400 text-sm mt-1">{errors.name.message}</p>

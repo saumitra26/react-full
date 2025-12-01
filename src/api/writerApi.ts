@@ -1,4 +1,4 @@
-import type { Writer, writerRequest } from "../dataModel/writer";
+import type { ApiResponse, Writer, writerRequest } from "../dataModel/writer";
 import axiosClient from "./axiosClient";
 
 type WritersResponse = {
@@ -20,17 +20,17 @@ export const writerApi = {
       .get<WritersResponse>("/writers")
       .then((response) => response.data),
   getWriterById: (id: number) =>
-    axiosClient.get<Writer>(`/writers/${id}`).then((response) => response.data),
+    axiosClient.get<ApiResponse<Writer>>(`/writers/${id}`).then((response) => response.data.data),
   addWriter: (payload: writerRequest) =>
     axiosClient
-      .post<Writer>("/writers", payload)
+      .post<ApiResponse<Writer>>("/writers", payload)
       .then((response) => response.data),
   updateWriter: (id: number, payload: Writer) =>
     axiosClient
-      .put<updateResponse>(`/writer/${id}`, payload)
+      .put<updateResponse>(`/writers/${id}`, payload)
       .then((response) => response.data),
   deleteWriter: (id: number) =>
     axiosClient
-      .delete<DeleteResponse>(`/writer/${id}`)
+      .delete<DeleteResponse>(`/writers/${id}`)
       .then((response) => response.data),
 };
