@@ -1,20 +1,25 @@
 import { useEffect, useState } from "react";
 import BookList from "../components/books/BookList";
 import { useBook } from "../context/BookContext";
+import type { Book } from "../dataModel/book";
+import bookApi from "../api/bookApi";
 
 const BookPage = () => {
-  const { fetchAllBook } = useBook();
+  const { books } = useBook();
   const [search, setSearch] = useState("");
+  const [filterBook, setFilterBook] = useState<Book[]>(books);
   const handleSearch = (e: any) => {
     const value = e.target.value;
     setSearch(value);
   };
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const timeoutId = setTimeout(async () => {
       if (search.trim() === "") {
-        fetchAllBook(); // load all books
+        setFilterBook(books); // load all books
       } else {
-        fetchAllBook({ search }); // send search param
+        const result = await bookApi.getBooks({ search });
+
+        setFilterBook(result.data);
       }
     }, 500);
     return () => clearTimeout(timeoutId);
@@ -36,7 +41,7 @@ const BookPage = () => {
           <div className="h-px bg-gray-300 my-4"></div>
         </div>
       </section>
-      <BookList paginate={false} />
+      <BookList books={filterBook} paginate={false} />
     </>
   );
 };

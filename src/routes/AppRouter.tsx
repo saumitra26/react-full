@@ -11,6 +11,9 @@ import WriterPage from "../pages/WriterPage";
 import BookDetails from "../pages/BookDetails";
 import AddBook from "../pages/AddBook";
 import EditBook from "../pages/EditBook";
+import WriterDetails from "../pages/WriterDetails";
+import AddWriter from "../pages/AddWriter";
+import EditWriter from "../pages/EditWriter";
 
 
 const AppRouter = () => {
@@ -64,6 +67,30 @@ const AppRouter = () => {
               element={
                 <ProtectedRoute>
                   <WriterPage />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/writer/:id"
+              element={
+                <ProtectedRoute>
+                  <WriterDetails />
+                </ProtectedRoute>
+              }
+            />
+               <Route
+              path="/addWriter/"
+              element={
+                <ProtectedRoute>
+                  <AddWriter />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/editWriter/:id"
+              element={
+                <ProtectedRoute>
+                  <EditWriter />
                 </ProtectedRoute>
               }
             />

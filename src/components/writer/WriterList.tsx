@@ -4,8 +4,14 @@ import useWindowWidth from "../../hooks/useWindowWidth";
 import WriterCard from "./WriterCard";
 import { GrLinkNext } from "react-icons/gr";
 import { GrLinkPrevious } from "react-icons/gr";
-const WriterList = ({ paginate=true}) => {
-  const { writers } = useWriter();
+import type { Writer } from "../../dataModel/writer";
+interface writerInterface { 
+  writers: Writer[];
+  paginate:boolean
+  
+}
+const WriterList = ({writers, paginate=true}:writerInterface) => {
+  //const { writers } = useWriter();
   const [page, setPage] = useState(0);
   const width = useWindowWidth();
   let cardsToShow = 2;

@@ -46,6 +46,9 @@ const Navbar = () => {
             <NavLink className={linkClass} to="/addBook">
               Add Book
             </NavLink>
+            <NavLink className={linkClass} to="/addWriter">
+              Add Writer
+            </NavLink>
             {user ? (
               <button
                 className="text-gray-700 hover:text-red-500 transition-colors"
