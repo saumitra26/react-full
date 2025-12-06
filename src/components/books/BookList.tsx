@@ -85,4 +85,4 @@ const BookList = ({ books, paginate  }:BookInterface) => {
   );
 };
 
-export default BookList;
+export default React.memo(BookList);

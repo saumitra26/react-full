@@ -1,29 +1,39 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import BookList from "../components/books/BookList";
 import { useBook } from "../context/BookContext";
 import type { Book } from "../dataModel/book";
 import bookApi from "../api/bookApi";
+import { useDebounce } from "../hooks/useDebounce";
 
 const BookPage = () => {
   const { books } = useBook();
+
   const [search, setSearch] = useState("");
+  const debounceSearch = useDebounce(search, 500);
   const [filterBook, setFilterBook] = useState<Book[]>(books);
-  const handleSearch = (e: any) => {
+  const [loading, setLoading] = useState(false);
+  const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
-  };
+  },[]);
   useEffect(() => {
-    const timeoutId = setTimeout(async () => {
-      if (search.trim() === "") {
-        setFilterBook(books); // load all books
-      } else {
-        const result = await bookApi.getBooks({ search });
-
-        setFilterBook(result.data);
+    const fetchBooks = async () => {
+      setLoading(true);
+      
+      try {
+        if (!debounceSearch.trim) {
+          setFilterBook(books);
+        } else {
+          const result = await bookApi.getBooks({ search: debounceSearch });
+          setFilterBook(result.data);
+        }
+      } catch (error) {
+      } finally {
+        setLoading(false);
       }
-    }, 500);
-    return () => clearTimeout(timeoutId);
-  }, [search]);
+    };
+    fetchBooks();
+  }, [debounceSearch, books]);
   return (
     <>
       <section>

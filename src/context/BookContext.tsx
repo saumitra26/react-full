@@ -1,4 +1,4 @@
-import { createContext, useState, useContext, useEffect } from "react";
+import { createContext, useState, useContext, useEffect, useCallback, useMemo } from "react";
 import type { Book, BookRequest } from "../dataModel/book";
 import bookApi from "../api/bookApi";
 import { useAuth } from "./AuthContext";
@@ -20,14 +20,12 @@ export const BookProvider = ({ children }: { children: React.ReactNode }) => {
   const [error, setError] = useState<string | null>(null);
   const { user } = useAuth();
   useEffect(() => {
-    console.log("helooo");
     if (user) {
       fetchAllBook();
-      console.log("helooo");
     }
   }, [user]);
 
-  const fetchAllBook = async (params?: Record<string, any>) => {
+  const fetchAllBook = useCallback(async (params?: Record<string, any>) => {
     try {
       setLoading(true);
       const result = await bookApi.getBooks(params);
@@ -38,8 +36,8 @@ export const BookProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false);
     }
-  };
-  const bookById = async (id: number): Promise<Book | null> => {
+  },[]) 
+  const bookById = useCallback(async (id: number): Promise<Book | null> => {
     try {
       const book = await bookApi.getBookById(id);
       return book;
@@ -48,8 +46,8 @@ export const BookProvider = ({ children }: { children: React.ReactNode }) => {
 
       return null;
     }
-  };
-  const addNewBook = async (payload: BookRequest) => {
+  },[])
+  const addNewBook = useCallback(async (payload: BookRequest) => {
     try {
       setLoading(true);
       const newBook = await bookApi.addBook(payload);
@@ -60,8 +58,8 @@ export const BookProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false);
     }
-  };
-  const updateBook = async (id: number, payload: BookRequest) => {
+  },[])
+  const updateBook = useCallback(async (id: number, payload: BookRequest) => {
     try {
       setLoading(true);
       const result = await bookApi.updateBook(id, payload);
@@ -72,8 +70,8 @@ export const BookProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false);
     }
-  };
-  const deleteBook = async (id: number) => {
+  },[])
+  const deleteBook = useCallback(async (id: number) => {
     try {
       setLoading(true);
       const result = await bookApi.deleteBook(id);
@@ -85,24 +83,23 @@ export const BookProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  return (
-    <BookContext.Provider
-      value={{
-        books,
-        loading,
-        error,
-        bookById,
-        deleteBook,
-        updateBook,
-        addNewBook,
-        fetchAllBook,
-      }}
-    >
-      {children}
-    </BookContext.Provider>
+  },[]
+  )
+  const contextValue = useMemo(
+    () => ({
+      books,
+      loading,
+      error,
+      bookById,
+      deleteBook,
+      updateBook,
+      addNewBook,
+      fetchAllBook,
+    }),
+    [books, loading, error, bookById, deleteBook, updateBook, addNewBook, fetchAllBook]
   );
+
+  return <BookContext.Provider value={contextValue}>{children}</BookContext.Provider>;
 };
 
 export const useBook = () => {

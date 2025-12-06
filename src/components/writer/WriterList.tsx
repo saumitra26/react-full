@@ -5,12 +5,11 @@ import WriterCard from "./WriterCard";
 import { GrLinkNext } from "react-icons/gr";
 import { GrLinkPrevious } from "react-icons/gr";
 import type { Writer } from "../../dataModel/writer";
-interface writerInterface { 
+interface writerInterface {
   writers: Writer[];
-  paginate:boolean
-  
+  paginate: boolean;
 }
-const WriterList = ({writers, paginate=true}:writerInterface) => {
+const WriterList = ({ writers, paginate = true }: writerInterface) => {
   //const { writers } = useWriter();
   const [page, setPage] = useState(0);
   const width = useWindowWidth();
@@ -18,19 +17,20 @@ const WriterList = ({writers, paginate=true}:writerInterface) => {
   if (width >= 640) cardsToShow = 3; // sm:
   if (width >= 768) cardsToShow = 4; // md:
   if (width >= 1024) cardsToShow = 5; // lg:
- if (width >= 1280) cardsToShow = 5;
-    if (!paginate) { 
-        return (
-            <section>
-                <div className="max-w-7xl mx-auto p-4">
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-                        {writers.map((writer) => (<WriterCard key={writer.id} writer={ writer} />))}
-                    </div>
-
-                </div>
-            </section>
-        )
-    }
+  if (width >= 1280) cardsToShow = 5;
+  if (!paginate) {
+    return (
+      <section>
+        <div className="max-w-7xl mx-auto p-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            {writers.map((writer) => (
+              <WriterCard key={writer.id} writer={writer} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   const totalPages = useMemo(
     () => Math.max(1, Math.ceil(writers.length / cardsToShow)),
@@ -85,4 +85,4 @@ const WriterList = ({writers, paginate=true}:writerInterface) => {
   );
 };
 
-export default WriterList;
+export default React.memo( WriterList);
