@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 import type { ApiResponse, Writer, writerRequest } from "../dataModel/writer";
 import { writerApi } from "../api/writerApi";
 import { useAuth } from "./AuthContext";
@@ -41,7 +41,7 @@ export const WriterProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [user, fetchWriters]);
 
-  const writerById = async (id: number): Promise<Writer | null> => {
+  const writerById = useCallback(async (id: number): Promise<Writer | null> => {
     try {
       const response = await writerApi.getWriterById(id);
       return response;
@@ -50,9 +50,9 @@ export const WriterProvider = ({ children }: { children: React.ReactNode }) => {
       setErrors(message);
       return null;
     }
-  };
+  },[]);
 
-  const addedWriter = async (payload: writerRequest) => {
+  const addedWriter = useCallback(async (payload: writerRequest) => {
     try {
       setLoading(true);
       setErrors(null);
@@ -64,9 +64,9 @@ export const WriterProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
 
-  const updateWriter = async (id: number, payload: Writer) => {
+  const updateWriter = useCallback(async (id: number, payload: Writer) => {
     try {
       setLoading(true);
       setErrors(null);
@@ -79,9 +79,9 @@ export const WriterProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false);
     }
-  };
+  },[]);
 
-  const deleteWriter = async (id: number) => {
+  const deleteWriter = useCallback(async (id: number) => {
     try {
       setLoading(true);
       setErrors(null);
@@ -94,19 +94,11 @@ export const WriterProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false);
     }
-  };
-
+  },[]);
+  const contextValue = useMemo(() => ({ writers, loading, errors, writerById, addedWriter, updateWriter, deleteWriter }), [writers, loading, errors, writerById, addedWriter, updateWriter, deleteWriter]);
   return (
     <WriterContext.Provider
-      value={{
-        writers,
-        loading,
-        errors,
-        writerById,
-        addedWriter,
-        updateWriter,
-        deleteWriter,
-      }}
+      value={ contextValue}
     >
       {children}
     </WriterContext.Provider>

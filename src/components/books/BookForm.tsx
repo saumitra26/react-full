@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import type { Book, BookRequest } from "../../dataModel/book";
 import type { Writer } from "../../dataModel/writer";
 import { useEffect, useState } from "react";
+import React from "react";
 interface BookFormProps {
   defaultValues?: Partial<Book>;
   authors: Writer[];
@@ -135,4 +136,4 @@ const BookForm = ({
   );
 };
 
-export default BookForm;
+export default React.memo(BookForm);

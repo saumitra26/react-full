@@ -114,4 +114,4 @@ const WriterForm = ({
   );
 };
 
-export default WriterForm;
+export default React.memo(WriterForm);
