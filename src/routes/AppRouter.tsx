@@ -20,8 +20,6 @@ const EditWriter = lazy(()=>import("../pages/EditWriter"))
 
 const AppRouter = () => {
   return (
-    <BookProvider>
-      <WriterProvider>
         <Suspense fallback={ <div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<MainLayout />}>
@@ -102,8 +100,6 @@ const AppRouter = () => {
           <Route path="register" element={<Register />} />
           </Routes>
           </Suspense>
-      </WriterProvider>
-    </BookProvider>
   );
 };
 

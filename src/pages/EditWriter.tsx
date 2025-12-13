@@ -1,43 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { useWriter } from "../context/WriterContext";
+
 import { useNavigate, useParams } from "react-router-dom";
-import type { Writer, writerRequest } from "../dataModel/writer";
+import type { writerRequest } from "../dataModel/writer";
 import WriterForm from "../components/writer/WriterForm";
+import { useGetWriterByIdQuery, useUpdateWriterMutation } from "../services/writerAPI";
 
 const EditWriter = () => {
-  const { updateWriter, writerById } = useWriter();
+
   const { id } = useParams();
   const writerId = Number(id);
   const navigate = useNavigate();
-  const [writer, setWriter] = useState<Writer | null>(null);
-
-  useEffect(() => {
-    const getWriterById = async () => {
-      try {
-        const writerDetails = await writerById(writerId);
-
-        if (!writerDetails) {
-          console.warn("No writer found for ID:", writerId);
-          return;
-        }
-
-        console.log("writerId", writerDetails);
-
-        setWriter(writerDetails);
-      } catch (error) {
-        console.error("Failed to load writer:", error);
-      }
-    };
-
-    if (!isNaN(writerId)) {
-      getWriterById();
-    }
-  }, [writerId, writerById]);
+  const { data: writer } = useGetWriterByIdQuery(writerId)
+  console.log('test',writer)
+  const [updateWriter] = useUpdateWriterMutation();
 
   const updateWriterInfo = async (data: writerRequest) => {
       try {
         console.log('testEitWriter',writerId,data)
-      await updateWriter(writerId, data);
+        await updateWriter({id:writerId,payload:data}).unwrap();
       navigate(`/writer/${writerId}`);
     } catch (error) {
       console.error(error);

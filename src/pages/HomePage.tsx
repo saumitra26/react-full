@@ -3,18 +3,19 @@ import HomePageCard from "../components/common/HomePageCard";
 import BookList from "../components/books/BookList";
 import WriterList from "../components/writer/WriterList";
 import Footer from "../components/common/Footer";
-import { useWriter } from "../context/WriterContext";
-import { useBook } from "../context/BookContext";
+import { useGetBooksQuery } from "../services/bookAPI";
+import { useGetWritersQuery } from "../services/writerAPI";
 
 const HomePage = () => {
-  const { writers } = useWriter();
-  const { books } = useBook();
+
+  const { data: book = [], isLoading, error } = useGetBooksQuery({});
+  const { data: writer = [] } = useGetWritersQuery({});
   return (
     <>
       <HomeStart />
       <HomePageCard />
-      <BookList books={ books} paginate={ true} />
-      <WriterList writers={writers} paginate={ true} />
+      <BookList books={ book} paginate={ true} />
+      <WriterList writers={writer} paginate={ true} />
       <Footer />
     </>
   );

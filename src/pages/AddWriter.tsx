@@ -1,15 +1,15 @@
 import React from 'react'
 import WriterForm from '../components/writer/WriterForm'
 import type { writerRequest } from '../dataModel/writer'
-import { useWriter } from '../context/WriterContext'
 import { useNavigate } from 'react-router-dom'
+import { useAddWriterMutation } from '../services/writerAPI'
 
 const AddWriter = () => {
-    const { addedWriter } = useWriter()
+    const [addWriter]  = useAddWriterMutation()
     const navigate=useNavigate()
-    const addWriter = async (data: writerRequest) => { 
+    const addedWriter = async (data: writerRequest) => { 
         try {
-            await addedWriter(data);
+            await addWriter(data).unwrap();
             navigate("/writer")
         } catch (error) { 
             console.error(error)
@@ -17,7 +17,7 @@ const AddWriter = () => {
        
     }
   return (
-      <WriterForm onSubmit={addWriter} defaultValues={{}} type="Add"/>
+      <WriterForm onSubmit={addedWriter} defaultValues={{}} type="Add"/>
   )
 }
 

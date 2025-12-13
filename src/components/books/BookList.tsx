@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useBook } from "../../context/BookContext";
 import BookCard from "./BookCard";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import { GrLinkNext } from "react-icons/gr";

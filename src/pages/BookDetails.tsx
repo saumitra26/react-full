@@ -1,35 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { useBook } from "../context/BookContext";
 import { Link, useParams } from "react-router-dom";
-import type { Book } from "../dataModel/book";
 import { useNavigate } from "react-router-dom";
+import { useDeleteBookMutation, useGetBookByIdQuery } from "../services/bookAPI";
 const BookDetails = () => {
-  const { bookById, deleteBook, loading } = useBook();
   const { id } = useParams();
+
   const bookId = Number(id);
-  const [book, setBook] = useState<Book | null>(null);
+  const { data: book, isLoading, error } = useGetBookByIdQuery(bookId);
+  const [deleteBook] = useDeleteBookMutation();
   const navigate = useNavigate();
-  useEffect(() => {
-    async function fetchBookById() {
-      try {
-        const bookDetails = await bookById(bookId);
-        setBook(bookDetails);
-      } catch (error) {
-        console.error("Failed to load book:", error);
-      }
-    }
-    if (!isNaN(bookId)) {
-      fetchBookById();
-    }
-  }, [bookById, bookId]);
+
   const removeBook = async () => {
+   console.log("removeBook bookId:", bookId, "type:", typeof bookId);
     try {
-      await deleteBook(bookId);
+      // unwrap to throw on error
+      await deleteBook(bookId).unwrap();
       navigate("/book");
-    } catch (error) {
-      console.error(error);
+    } catch (err) {      console.error(err);
     }
   };
+
+  if (isLoading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center mt-10">Error loading book</div>;
+  }
+
   if (!book) {
     return <div className="text-center mt-10">No Result Found</div>;
   }

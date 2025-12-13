@@ -4,13 +4,15 @@ import "./index.css";
 import App from "./App.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import AppRouter from "./routes/AppRouter.tsx";
-import Navbar from "./components/common/Navbar.tsx";
 import { BrowserRouter } from "react-router-dom";
-
+import { Provider } from "react-redux";
+import { store} from "./store.ts"
 createRoot(document.getElementById("root")!).render(
-  <AuthProvider>
-    <BrowserRouter>
-      <AppRouter />
-    </BrowserRouter>
-  </AuthProvider>
+  <Provider store={store}>
+      <AuthProvider>
+        <BrowserRouter>
+          <AppRouter />
+        </BrowserRouter>
+      </AuthProvider>
+    </Provider>
 );
