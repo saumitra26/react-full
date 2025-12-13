@@ -1,22 +1,22 @@
-import React from "react";
 import BookForm from "../components/books/BookForm";
 import type { BookRequest } from "../dataModel/book";
 import { useWriter } from "../context/WriterContext";
-import { useBook } from "../context/BookContext";
 import { useNavigate } from "react-router-dom";
+import { useAddBookMutation } from "../services/bookAPI";
+import { useGetWritersQuery } from "../services/writerAPI";
 
 const AddBook = () => {
-  const { writers } = useWriter();
-  const { addNewBook } = useBook();
-   const navigate= useNavigate()
+  const { data: writers = [], isLoading, error } = useGetWritersQuery({});
+
+  const [addBook] = useAddBookMutation();
+  const navigate = useNavigate();
 
   const handleAddSubmit = async (data: BookRequest) => {
     console.log("data", data);
 
     try {
-      await addNewBook(data);
-     // navigate("/book")
-
+      await addBook(data).unwrap();
+      navigate("/book");
     } catch (error) {
       console.error(error);
     }

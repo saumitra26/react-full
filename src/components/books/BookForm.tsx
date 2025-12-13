@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import type { Book, BookRequest } from "../../dataModel/book";
 import type { Writer } from "../../dataModel/writer";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import React from "react";
 interface BookFormProps {
   defaultValues?: Partial<Book>;
@@ -24,7 +24,6 @@ const BookForm = ({
     watch,
     setValue,
   } = useForm<Book>({ defaultValues });
-  const [writerId, setWriterId] = useState<number>();
   const formatDateForInput = (dateString: string): string => {
     const date = new Date(dateString);
 

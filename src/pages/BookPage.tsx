@@ -1,39 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
 import BookList from "../components/books/BookList";
-import { useBook } from "../context/BookContext";
-import type { Book } from "../dataModel/book";
-import bookApi from "../api/bookApi";
 import { useDebounce } from "../hooks/useDebounce";
+import { useGetBooksQuery } from "../services/bookAPI";
 
 const BookPage = () => {
-  const { books } = useBook();
-
+  
   const [search, setSearch] = useState("");
   const debounceSearch = useDebounce(search, 500);
-  const [filterBook, setFilterBook] = useState<Book[]>(books);
-  const [loading, setLoading] = useState(false);
+  const { data: books = [], isLoading, error } = useGetBooksQuery({search:debounceSearch});
+  console.log("books",books)
   const handleSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
-  },[]);
-  useEffect(() => {
-    const fetchBooks = async () => {
-      setLoading(true);
-      
-      try {
-        if (!debounceSearch.trim) {
-          setFilterBook(books);
-        } else {
-          const result = await bookApi.getBooks({ search: debounceSearch });
-          setFilterBook(result.data);
-        }
-      } catch (error) {
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBooks();
-  }, [debounceSearch, books]);
+  }, []);
+
   return (
     <>
       <section>
@@ -51,7 +31,13 @@ const BookPage = () => {
           <div className="h-px bg-gray-300 my-4"></div>
         </div>
       </section>
-      <BookList books={filterBook} paginate={false} />
+      {isLoading ? (
+        <p className="text-center">Loading...</p>
+      ) : error ? (
+        <p className="text-center text-red-500">Error loading books.</p>
+      ) : (
+        <BookList books={books} paginate={false} />
+      )}
     </>
   );
 };

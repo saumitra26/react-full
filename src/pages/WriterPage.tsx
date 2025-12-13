@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import WriterList from "../components/writer/WriterList";
-import { useWriter } from "../context/WriterContext";
 import type { Writer } from "../dataModel/writer";
+import { useGetWritersQuery } from "../services/writerAPI";
 
 const WriterPage = () => {
-  const { writers } = useWriter();
+  const { data: writers = [], isLoading, error } = useGetWritersQuery({})
   const [search, setSearch] = useState("");
   const [filteredWriters, setFilteredWriters] = useState<Writer[]>(writers);
 

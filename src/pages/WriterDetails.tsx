@@ -1,38 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useWriter } from "../context/WriterContext";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import type { Writer } from "../dataModel/writer";
 
-const WriterDetails = ({ }) => {
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDeleteWriterMutation, useGetWriterByIdQuery } from "../services/writerAPI";
+
+const WriterDetails = ({}) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const writerId = Number(id);
-  console.log("writerId", writerId);
-  const [writer, setWriter] = useState<Writer | null>(null);
-  const { writerById, deleteWriter } = useWriter();
-  useEffect(() => {
-    if (!isNaN(writerId)) {
-      singleWriterInfo();
-    }
-  }, [writerId]);
-  const singleWriterInfo = async () => {
-    try {
-      const writerDetails = await writerById(writerId);
-console.log("test id by ss",writerDetails)
-      if (!writerDetails) {
-        console.warn("No writer found for ID:", writerId);
-        return;
-      }
 
-      console.log("writerId", writerDetails);
-
-      setWriter(writerDetails);
-    } catch (error) {
-      console.error("Failed to load writer:", error);
-    }
-  };
+  const { data: writer } = useGetWriterByIdQuery(writerId);
+  const[deleteWriter]=useDeleteWriterMutation()
+  console.log("the data",writer)
+ 
   const removeWriter = async () => {
-    await deleteWriter(writerId);
+    await deleteWriter(writerId).unwrap();
     navigate("/writer");
   };
   if (!writer) {
