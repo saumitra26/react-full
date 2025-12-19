@@ -69,23 +69,26 @@ const BookForm = ({
               onSubmit={handleSubmit(bookSubmit)}
               className=" flex flex-col gap-1 py-4 px-5"
             >
-              <label>Book Name</label>
+              <label htmlFor="book-name">Book Name</label>
               <input
+                id="book-name"
                 className="border rounded-md p-2 mb-3 "
                 type="text"
                 {...register("name", { required: "Name is required" })}
                 placeholder=" Name"
               />
               {errors.name && <p>{errors.name.message}</p>}
-              <label>Book Type</label>
+              <label htmlFor="book-type">Book Type</label>
               <input
+                id="book-type"
                 className="border rounded-md p-2 mb-3"
                 type="text"
                 {...register("type", { required: "type is required" })}
                 placeholder=" Type"
               />
-              <label>Author Name</label>
+              <label htmlFor="author-name">Author Name</label>
               <select
+                id="author-name"
                 {...register("writer_name")}
                 className="border rounded-md p-2 mb-3"
               >
@@ -96,14 +99,16 @@ const BookForm = ({
                   </option>
                 ))}
               </select>
-              <label>Book Description</label>
+              <label htmlFor="book-description">Book Description</label>
               <textarea
+                id="book-description"
                 className="border border-gray-300 rounded-lg w-full h-28 px-3 py-2 mb-3 text-base focus:outline-none focus:ring-2 focus:ring-blue-400 resize-y"
                 placeholder="Book details..."
                 {...register("description", { required: "type is required" })}
               ></textarea>
-              <label>Published date</label>
+              <label htmlFor="published-date">Published date</label>
               <input
+                id="published-date"
                 {...register("published_date", {
                   required: "date is required",
                 })}
@@ -111,8 +116,9 @@ const BookForm = ({
                 type="date"
                 placeholder=" Published date"
               />
-              <label>Book Price</label>
+              <label htmlFor="book-price">Book Price</label>
               <input
+                id="book-price"
                 {...register("price", {
                   required: "Price is required",
                   valueAsNumber: true,
