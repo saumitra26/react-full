@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 
 const HomeCard = ({ children, bg = "bg-gray-100" }: { children: ReactNode; bg?: string }) => {
   return (

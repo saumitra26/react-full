@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import type { RegisterRequest } from "../dataModel/auth";
 import { useForm } from "react-hook-form";

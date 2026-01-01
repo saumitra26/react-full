@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import BookCard from "./BookCard";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import { GrLinkNext } from "react-icons/gr";
@@ -84,4 +84,4 @@ const BookList = ({ books, paginate  }:BookInterface) => {
   );
 };
 
-export default React.memo(BookList);
+export default memo(BookList);

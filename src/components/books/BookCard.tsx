@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import type { Book } from "../../dataModel/book";
 import { Link } from "react-router-dom";
 import { GrLinkNext } from "react-icons/gr";
@@ -33,4 +33,4 @@ const BookCard = ({ book, paginate }: BookCardProps) => {
   );
 };
 
-export default React.memo(BookCard);
+export default memo(BookCard);

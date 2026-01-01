@@ -1,4 +1,3 @@
-import React from 'react'
 import WriterForm from '../components/writer/WriterForm'
 import type { writerRequest } from '../dataModel/writer'
 import { useNavigate } from 'react-router-dom'

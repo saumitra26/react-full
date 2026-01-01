@@ -1,5 +1,3 @@
-import React from "react";
-
 const HomeStart = () => {
   return (
     <section className="bg-green-800 py-20 mb-10">

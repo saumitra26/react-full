@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import WriterList from "../components/writer/WriterList";
 import type { Writer } from "../dataModel/writer";
 import { useGetWritersQuery } from "../services/writerAPI";
