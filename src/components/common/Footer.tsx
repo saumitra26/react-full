@@ -1,4 +1,3 @@
-import React from "react";
 import bookImage from "../../assets/image/bookImage.png";
 import { BsTwitterX } from "react-icons/bs";
 import { IoLogoFacebook } from "react-icons/io5";
@@ -45,4 +44,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

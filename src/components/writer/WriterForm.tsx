@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import type { Writer, writerRequest } from "../../dataModel/writer";
 
@@ -114,4 +114,4 @@ const WriterForm = ({
   );
 };
 
-export default React.memo(WriterForm);
+export default memo(WriterForm);

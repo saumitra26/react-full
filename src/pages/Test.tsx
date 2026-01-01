@@ -1,6 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import { useForm } from "react-hook-form";
-import React, { useState } from "react";
+import { useState } from "react";
 import type { LoginRequest } from "../dataModel/auth";
 
 const Test = () => {

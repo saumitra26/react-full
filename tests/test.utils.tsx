@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { render } from "@testing-library/react";
-import React from "react";
+import type { ReactElement } from "react";
 import { Provider } from "react-redux";
 import { bookAPI } from "../src/services/bookAPI";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
@@ -8,8 +8,8 @@ import { writerApi } from "../src/services/writerAPI";
 type RenderOptions = {
   route?: string;
   path?: string;
-}
-export const renderWithProviders = (ui: React.ReactElement, { route = "/book/2", path = "/book/:id" }: RenderOptions = {}) => {
+};
+export const renderWithProviders = (ui: ReactElement, { route = "/book/2", path = "/book/:id" }: RenderOptions = {}) => {
   const store = configureStore({
     reducer: {
       [bookAPI.reducerPath]: bookAPI.reducer,

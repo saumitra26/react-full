@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { useWriter } from "../../context/WriterContext";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import WriterCard from "./WriterCard";
@@ -85,4 +85,4 @@ const WriterList = ({ writers, paginate = true }: writerInterface) => {
   );
 };
 
-export default React.memo( WriterList);
+export default memo(WriterList);
