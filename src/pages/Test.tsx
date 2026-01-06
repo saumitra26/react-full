@@ -13,7 +13,7 @@ const Test = () => {
     formState: { errors },
   } = useForm<LoginRequest>({});
   const onSubmit = async (loginData: LoginRequest) => {
-    console.log(loginData);
+    console.log("test",loginData);
     setSubmitError(null);
     try {
       setLoading(true);
