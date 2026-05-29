@@ -2,9 +2,10 @@ import bookImage from "../../assets/image/bookImage.png";
 import { BsTwitterX } from "react-icons/bs";
 import { IoLogoFacebook } from "react-icons/io5";
 import { TfiEmail } from "react-icons/tfi";
-
+// hello from Feature
 const Footer = () => {
   return (
+    
     <footer className="bg-black text-white">
       <div className="max-w-7xl mx-auto px-6 py-10 grid gap-8 sm:grid-cols-3 items-start">
         
