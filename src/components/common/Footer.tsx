@@ -2,7 +2,7 @@ import bookImage from "../../assets/image/bookImage.png";
 import { BsTwitterX } from "react-icons/bs";
 import { IoLogoFacebook } from "react-icons/io5";
 import { TfiEmail } from "react-icons/tfi";
-// hello from main branch
+// hello from conflit branch
 const Footer = () => {
   return (
     
