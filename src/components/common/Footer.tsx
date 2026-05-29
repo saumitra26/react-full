@@ -30,7 +30,7 @@ const Footer = () => {
         {/* Address Section */}
         <div>
           <h2 className="font-semibold text-lg mb-3">Address</h2>
-          <p className="text-sm text-gray-300">Sõpruse pst 220</p>
+          <p className="text-sm text-gray-300">Sõpruse Pst 220</p>
           <p className="text-sm text-gray-300">13416, Harjumaa</p>
           <p className="text-sm text-gray-300">Tallinn, Estonia</p>
         </div>
